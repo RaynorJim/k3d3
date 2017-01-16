@@ -5,8 +5,7 @@ HTMLWidgets.widget({
   type: 'output',
 
   initialize: function(d, width, height) {
-
-     d3.select(d).append("svg")
+     d3.select(d)//.append("svg")
       .attr("width", 2)
       .attr("height", 2);
 
@@ -36,8 +35,9 @@ var diagonal = d3.svg.diagonal()
  .projection(function(d) { return [d.y, d.x]; });
 
 // Remove the previous svg element 
+
 var svg = d3.select(d).select("svg");
-    svg.selectAll("*").remove();
+  svg.selectAll("*").remove();  
 
 // var svg = d3.select("body").append("svg") 
 var svg = d3.select(d).append("svg")
@@ -60,7 +60,7 @@ function collapse(d) {
 		}
 		}
 
-root.children.forEach(collapse);
+//root.children.forEach(collapse);
 update(root);
 
 d3.select(self.frameElement).style("height", "800px");
