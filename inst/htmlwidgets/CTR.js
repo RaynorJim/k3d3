@@ -101,7 +101,7 @@ nodeEnter.append("text")
  .attr("dy", ".35em")
  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
  .text(function(d) { return d.name; })
- .style({"font": "10px sans-serif", "fill-opacity": 1e-6});
+ .style({"font": "13px sans-serif", "fill-opacity": 1e-6});
 
 // Transition nodes to their new position.
 // Transition nodes to their new position.
