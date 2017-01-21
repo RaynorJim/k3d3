@@ -5,21 +5,21 @@ HTMLWidgets.widget({
   type: 'output',
 
   initialize: function(d, width, height) {
-
-     d3.select(d)//.append("svg")
-      .attr("width", 2)
-      .attr("height", 2);
+     d3.select(d).append("svg")
+      .attr("width", 1)
+      .attr("height", 1);
 
     return d3.layout.tree();
   },
   
   resize: function(d, width, height) {
      d3.select(d).select("svg")
-      .attr("width", 2)
-      .attr("height", 2);
+      .attr("width", 1)
+      .attr("height", 1);
   },
 
 renderValue: function(d, x, instance) {
+
 
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
  width = 1800 - margin.right - margin.left,
@@ -34,10 +34,10 @@ var tree = d3.layout.tree()
 
 var diagonal = d3.svg.diagonal()
  .projection(function(d) { return [d.y, d.x]; });
-
 // Remove the previous svg element 
 var svg = d3.select(d).select("svg");
     svg.selectAll("*").remove();
+	svg.selectAll("rect.negative").remove()
 
 // var svg = d3.select("body").append("svg") 
 var svg = d3.select(d).append("svg")
@@ -101,7 +101,7 @@ nodeEnter.append("text")
  .attr("dy", ".35em")
  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
  .text(function(d) { return d.name; })
- .style({"font": "13px sans-serif", "fill-opacity": 1e-6});
+ .style({"font": "10px sans-serif", "fill-opacity": 1e-6});
 
 // Transition nodes to their new position.
 // Transition nodes to their new position.
