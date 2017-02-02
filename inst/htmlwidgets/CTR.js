@@ -5,10 +5,9 @@ HTMLWidgets.widget({
   type: 'output',
 
   initialize: function(d, width, height) {
-
      d3.select(d).append("svg")
       .attr("width", 2)
-      .attr("height", 2);
+      .attr("height", 1);
 
     return d3.layout.tree();
   },
@@ -16,14 +15,15 @@ HTMLWidgets.widget({
   resize: function(d, width, height) {
      d3.select(d).select("svg")
       .attr("width", 2)
-      .attr("height", 2);
+      .attr("height", 1);
   },
 
 renderValue: function(d, x, instance) {
 
-var margin = {top: 20, right: 120, bottom: 20, left: 120},
- width = 1800;//$(document).width();// - margin.right - margin.left,
- height = 800;//$(document).height();// - margin.top - margin.bottom;
+
+var margin = {top: 20, right: 120, bottom: 20, left: 420},
+ width = 1800 - margin.right - margin.left,
+ height = 800 - margin.top - margin.bottom;
 
 var i = 0,
  duration = 750,
@@ -34,18 +34,15 @@ var tree = d3.layout.tree()
 
 var diagonal = d3.svg.diagonal()
  .projection(function(d) { return [d.y, d.x]; });
-
 // Remove the previous svg element 
 var svg = d3.select(d).select("svg");
     svg.selectAll("*").remove();
+	svg.selectAll("rect.negative").remove()
 
 // var svg = d3.select("body").append("svg") 
 var svg = d3.select(d).append("svg")
  .attr("width", Math.max(width + margin.right + margin.left, x.options.width))
  .attr("height", Math.max(height + margin.top + margin.bottom, x.options.height))
- .call(d3.behavior.zoom().on("zoom", function () {
-    svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-  }))
  .append("g")
  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     svg.selectAll("*").remove(); // REMOVE EXISTING 
@@ -89,9 +86,17 @@ var nodeEnter = node.enter().append("g")
 
 nodeEnter.append("circle")
  .attr("r", 1e-6)
- .style({"fill": function(d) { return d._children ? x.options.color1 : x.options.color2}, "stroke": x.options.color3, "stroke-width":"1.5px"});
+ .style({"fill": function(d) { return d._children ? x.options.color1 : d.level}, "stroke": x.options.color3, "stroke-width":"1.5px"});
 
+nodeEnter.append("image")
+  .attr("xlink:href", function(d) { return d.icon; })
+  .attr("x", "-12px")
+  .attr("y", "-12px")
+  .attr("width", "24px")
+  .attr("height", "24px");
+	  
 nodeEnter.append("text")
+ .attr('font-family', 'FontAwesome')
  .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
  .attr("dy", ".35em")
  .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
@@ -106,7 +111,7 @@ var nodeUpdate = node.transition()
 
 nodeUpdate.select("circle")
  .attr("r", 4.5)
- .style("fill", function(d) { return d._children ? x.options.color1 : x.options.color2; });
+ .style("fill", function(d) { return d._children ? x.options.color1 : d.level; });
 
 nodeUpdate.select("text")
  .style("fill-opacity", 1);
