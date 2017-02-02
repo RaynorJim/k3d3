@@ -6,7 +6,7 @@ HTMLWidgets.widget({
 
   initialize: function(d, width, height) {
      d3.select(d).append("svg")
-      .attr("width", 2)
+      .attr("width", 1)
       .attr("height", 1);
 
     return d3.layout.tree();
@@ -14,14 +14,14 @@ HTMLWidgets.widget({
   
   resize: function(d, width, height) {
      d3.select(d).select("svg")
-      .attr("width", 2)
+      .attr("width", 1)
       .attr("height", 1);
   },
 
 renderValue: function(d, x, instance) {
 
 
-var margin = {top: 20, right: 120, bottom: 20, left: 420},
+var margin = {top: 20, right: 120, bottom: 20, left: 120},
  width = 1800 - margin.right - margin.left,
  height = 800 - margin.top - margin.bottom;
 
