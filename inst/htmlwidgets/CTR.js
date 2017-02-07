@@ -21,7 +21,7 @@ HTMLWidgets.widget({
 renderValue: function(d, x, instance) {
 
 
-var margin = {top: 20, right: 120, bottom: 20, left: 220},
+var margin = {top: 20, right: 120, bottom: 20, left: 240},
  width = 1800 - margin.right - margin.left,
  height = 800 - margin.top - margin.bottom;
 
