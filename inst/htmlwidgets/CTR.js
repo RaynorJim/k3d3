@@ -6,22 +6,22 @@ HTMLWidgets.widget({
 
   initialize: function(d, width, height) {
      d3.select(d).append("svg")
-      .attr("width", 1)
-      .attr("height", 1);
+      .attr("width", width)
+      .attr("height", height);
 
     return d3.layout.tree();
   },
   
   resize: function(d, width, height) {
      d3.select(d).select("svg")
-      .attr("width", 1)
-      .attr("height", 1);
+      .attr("width", width)
+      .attr("height", height);
   },
 
 renderValue: function(d, x, instance) {
 
 
-var margin = {top: 20, right: 120, bottom: 20, left: 240},
+var margin = {top: 20, right: 120, bottom: 20, left: 120},
  width = 1800 - margin.right - margin.left,
  height = 800 - margin.top - margin.bottom;
 
@@ -30,6 +30,7 @@ var i = 0,
  root;
 
 var tree = d3.layout.tree()
+ .sort(function(a, b) { return d3.descending(a.size, b.size); })
  .size([height, width]);
 
 var diagonal = d3.svg.diagonal()
@@ -71,7 +72,7 @@ function update(source) {
 	links = tree.links(nodes);
 
 // Normalize for fixed-depth.
- nodes.forEach(function(d) { d.y = d.depth * 150; });
+ nodes.forEach(function(d) { d.y = d.depth * 180; });
 
 // Update the nodes.
 var node = svg.selectAll("g.node")
@@ -85,7 +86,7 @@ var nodeEnter = node.enter().append("g")
  .on("click", click);
 
 nodeEnter.append("circle")
- .attr("r", 1e-6)
+ .attr("r", function(d) { return d.size; })
  .style({"fill": function(d) { return d._children ? x.options.color1 : d.level}, "stroke": x.options.color3, "stroke-width":"1.5px"});
 
 nodeEnter.append("image")
@@ -110,7 +111,7 @@ var nodeUpdate = node.transition()
  .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
 nodeUpdate.select("circle")
- .attr("r", 4.5)
+ .attr("r", function(d) { return d.size })
  .style("fill", function(d) { return d._children ? x.options.color1 : d.level; });
 
 nodeUpdate.select("text")
